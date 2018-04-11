@@ -44,7 +44,7 @@ class PklChecker:
     def init_pkl(self):
         """ Find DCP PackingList. """
         for _file in os.listdir(self._path):
-            if _file.startswith('pkl'):
+            if _file.lower().startswith('pkl') and _file.lower().endswith('.xml'):
                 asset = os.path.join(self._path, _file)
                 pkls = pkl_parse(asset)['Info']['PackingList']['AssetList']['Asset']
                 for _ in pkls:
