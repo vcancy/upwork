@@ -31,7 +31,8 @@ class PklChecker:
         self._asset_map = dict()
         self._result = {
             'pass': [],
-            'fail': []
+            'fail': [],
+            'miss':[]
         }
 
     def init_asset_map(self):
@@ -69,10 +70,13 @@ class PklChecker:
             if _id in self._asset_map:
                 _file = self._asset_map[_id]
                 path = os.path.join(self._path, _file)
-                if _hash == shaone_b64(path, callback=console_progress_bar):
-                    self._result['pass'].append(_file)
+                if os.path.exists(path):
+                    if _hash == shaone_b64(path, callback=console_progress_bar):
+                        self._result['pass'].append(_file)
+                    else:
+                        self._result['fail'].append(_file)
                 else:
-                    self._result['fail'].append(_file)
+                    self._result['miss'].append(_file)
 
     def run(self):
         """ Process """
